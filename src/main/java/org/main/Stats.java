@@ -18,7 +18,9 @@ public class Stats {
     public Integer get(StatType type){
         return stats.get(type);
     }
-
+    public void set(StatType statType, int num) {
+        stats.put(statType, num);
+    }
     @Override
     public String toString(){
         StringBuilder resultBuilder = new StringBuilder();

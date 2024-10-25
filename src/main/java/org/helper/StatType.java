@@ -1,6 +1,7 @@
 package org.helper;
 
 public enum StatType {
+    Age("Age"),
     Health("Health"),
     Happiness("Happiness"),
     Looks("Looks"),
