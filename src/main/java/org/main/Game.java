@@ -9,15 +9,14 @@ public class Game {
     List<Charachter> charachters;
     List<Event> events;
 
-    public Game(){
-        this.charachters = new ArrayList<Charachter>(500);
-        for (int i=0; i<500; ++i)
-            charachters.add(new Charachter());
-    }
     public Game(int numOfCharachters){
-        this.charachters = new ArrayList<Charachter>(numOfCharachters);
+        this.charachters = new ArrayList<>(numOfCharachters);
         for (int i=0; i<numOfCharachters; ++i)
             charachters.add(new Charachter());
+    }
+    public Game(){
+        Game game = new Game(500);
+        this.charachters = game.charachters;
     }
 
     public Charachter getRandomCharachter(){

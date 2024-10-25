@@ -1,5 +1,6 @@
 package org.controller;
 
+import org.helper.StaticRandom;
 import org.main.Action;
 import org.main.Charachter;
 import org.main.Event;
@@ -8,13 +9,11 @@ import java.util.Comparator;
 import java.util.stream.Stream;
 
 public class AI extends Controller{
-    static Comparator<Action> baseLogic;
+    static Comparator<Action> baseLogic = (_, _) -> StaticRandom.nextInt(2) -1;
     Comparator<Action> decisionLogic = baseLogic;
 
 
     public AI(Charachter character) {
-        if (decisionLogic==null)
-            throw new IllegalStateException("Base decision logic must be set to call this constructor!");
         this.myCharachter = character;
     }
 

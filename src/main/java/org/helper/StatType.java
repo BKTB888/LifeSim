@@ -9,7 +9,7 @@ public enum StatType {
 
     private final String name;
 
-    private StatType(String name){
+    StatType(String name){
         this.name = name;
     }
 
