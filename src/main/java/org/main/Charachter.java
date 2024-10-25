@@ -26,7 +26,7 @@ public class Charachter {
     public List<Action> getActions(){return availableActions;}
     public Charachter(){
         this.name = nameGen.generateName();
-        this.gender = name.getGender();
+        this.gender = name.gender();
         this.stats = new Stats();
         this.myController = new AI(this);
 

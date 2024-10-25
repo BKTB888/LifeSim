@@ -57,9 +57,9 @@ public class NameGeneratorTest {
 
         //The generator should be able to generate a single name
         Name oneName = generator.generateName();
-        assertNotNull( oneName.getGender() );
-        assertNotNull( oneName.getFirstName() );
-        assertNotNull( oneName.getLastName() );
+        assertNotNull( oneName.gender() );
+        assertNotNull( oneName.firstName() );
+        assertNotNull( oneName.lastName() );
 
         //The generator should be able to generate multiple names
         List<Name> names = generator.generateNames(1000);
@@ -72,7 +72,7 @@ public class NameGeneratorTest {
         int males = 0;
         int females = 0;
         for( Name name : names ) {
-            if( name.getGender() == Gender.FEMALE ) {
+            if( name.gender() == Gender.FEMALE ) {
                 females++;
             } else {
                 males++;
@@ -93,14 +93,14 @@ public class NameGeneratorTest {
 
         //The generator should be able to generate a single name
         Name oneMale = generator.generateName( Gender.MALE );
-        assertSame( Gender.MALE, oneMale.getGender() );
-        assertNotNull( oneMale.getFirstName() );
-        assertNotNull( oneMale.getLastName() );
+        assertSame( Gender.MALE, oneMale.gender() );
+        assertNotNull( oneMale.firstName() );
+        assertNotNull( oneMale.lastName() );
 
         Name oneFemale = generator.generateName( Gender.FEMALE );
-        assertSame( Gender.FEMALE, oneFemale.getGender() );
-        assertNotNull( oneFemale.getFirstName() );
-        assertNotNull( oneFemale.getLastName() );
+        assertSame( Gender.FEMALE, oneFemale.gender() );
+        assertNotNull( oneFemale.firstName() );
+        assertNotNull( oneFemale.lastName() );
 
         //The generator should be able to generate multiple names
 
@@ -112,12 +112,12 @@ public class NameGeneratorTest {
 
         // All of the female names should be female
         for( Name name : femaleNames ) {
-            assertEquals( name.getGender(), Gender.FEMALE );
+            assertEquals( name.gender(), Gender.FEMALE );
         }
 
         // All of the male names should be male
         for( Name name : maleNames ) {
-            assertEquals( name.getGender(), Gender.MALE );
+            assertEquals( name.gender(), Gender.MALE );
         }
     }
 
@@ -165,8 +165,8 @@ public class NameGeneratorTest {
 
         List<Name> names = generator.generateNames(1000);
         for( Name name : names ) {
-            assertTrue( isCapitalized( name.getFirstName() ) );
-            assertTrue( isCapitalized( name.getLastName() ) );
+            assertTrue( isCapitalized( name.firstName() ) );
+            assertTrue( isCapitalized( name.lastName() ) );
         }
     }
 
