@@ -15,11 +15,13 @@
  */
 package org.ajbrown.namemachine;
 
+import org.helper.ajbrown.namemachine.Gender;
+import org.helper.ajbrown.namemachine.Name;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit Test for {@link org.ajbrown.namemachine.Name}
+ * Unit Test for {@link Name}
  *
  * @author A.J. Brown <a href="mailto:aj@ajbrown.org">aj@ajbrown.org</a>
  */

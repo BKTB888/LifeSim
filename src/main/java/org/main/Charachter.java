@@ -1,9 +1,9 @@
 package org.main;
 
-import org.ajbrown.namemachine.Gender;
-import org.ajbrown.namemachine.Name;
-import org.ajbrown.namemachine.NameGenerator;
-import org.ajbrown.namemachine.NameGeneratorOptions;
+import org.helper.ajbrown.namemachine.Gender;
+import org.helper.ajbrown.namemachine.Name;
+import org.helper.ajbrown.namemachine.NameGenerator;
+import org.helper.ajbrown.namemachine.NameGeneratorOptions;
 import org.controller.AI;
 import org.controller.Controller;
 

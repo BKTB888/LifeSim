@@ -17,6 +17,10 @@ package org.ajbrown.namemachine;
 
 import java.util.List;
 
+import org.helper.ajbrown.namemachine.Gender;
+import org.helper.ajbrown.namemachine.Name;
+import org.helper.ajbrown.namemachine.NameGenerator;
+import org.helper.ajbrown.namemachine.NameGeneratorOptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit Test for {@link org.ajbrown.namemachine.NameGenerator}
+ * Unit Test for {@link NameGenerator}
  * @author A.J. Brown <a href="mailto:aj@ajbrown.org">aj@ajbrown.org</a>
  */
 public class NameGeneratorTest {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ajbrown.namemachine;
+package org.helper.ajbrown.namemachine;
 
 import java.io.BufferedReader;
 import java.io.IOException;

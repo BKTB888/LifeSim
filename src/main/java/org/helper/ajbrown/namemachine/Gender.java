@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ajbrown.namemachine;
+package org.helper.ajbrown.namemachine;
 
 /**
  * @author A.J. Brown <a href="mailto:aj@ajbrown.org">aj@ajbrown.org</a>
