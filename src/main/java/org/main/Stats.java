@@ -18,4 +18,13 @@ public class Stats {
     public Integer get(StatType type){
         return stats.get(type);
     }
+
+    @Override
+    public String toString(){
+        StringBuilder resultBuilder = new StringBuilder();
+        for (StatType statType : StatType.values())
+            resultBuilder.append(statType).append(": ").append(stats.get(statType)).append('\n');
+        resultBuilder.deleteCharAt(resultBuilder.length()-1);
+        return resultBuilder.toString();
+    }
 }

@@ -31,4 +31,9 @@ public class Charachter {
         this.myController = new AI(this);
 
     }
+
+    @Override
+    public String toString(){
+        return String.valueOf(name) + '\n' + stats;
+    }
 }

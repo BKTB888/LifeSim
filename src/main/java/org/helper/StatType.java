@@ -1,9 +1,20 @@
 package org.helper;
 
 public enum StatType {
-    Health,
-    Happiness,
-    Looks,
-    Strength,
-    Luck
+    Health("Health"),
+    Happiness("Happiness"),
+    Looks("Looks"),
+    Strength("Strength"),
+    Luck("Luck");
+
+    private final String name;
+
+    private StatType(String name){
+        this.name = name;
+    }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }
