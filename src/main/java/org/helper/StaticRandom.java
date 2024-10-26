@@ -7,4 +7,7 @@ public class StaticRandom {
     static public int nextInt(int bound){
         return rng.nextInt(bound);
     }
+    static public double nextDouble(){
+        return rng.nextDouble();
+    }
 }
