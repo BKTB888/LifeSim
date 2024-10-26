@@ -23,6 +23,15 @@ public class Game {
         return charachters.get(StaticRandom.nextInt(charachters.size()));
     }
 
+    public void nextTurn(){
+        for (Charachter charachter: charachters) {
+            for (Event event : events)
+                if (StaticRandom.nextDouble() < event.chanceFor(charachter))
+                    charachter.giveEvent(event);
+            charachter.start();
+        }
+    }
+
     @Override
     public String toString(){
         StringBuilder resultBuilder = new StringBuilder();

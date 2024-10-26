@@ -22,9 +22,7 @@ public class Charachter {
 
     Stats stats;
     List<Action> availableActions;
-
     Controller myController;
-    Game game;
 
     public List<Action> getActions(){return availableActions;}
     public Charachter(){
@@ -33,6 +31,10 @@ public class Charachter {
         this.stats = new Stats();
         this.myController = new AI(this);
 
+    }
+
+    public void giveEvent(Event event){
+        myController.decide(event);
     }
 
     public void set(StatType statType, int num){
@@ -50,5 +52,10 @@ public class Charachter {
     @Override
     public String toString(){
         return String.valueOf(name) + '\n' + stats;
+    }
+
+    public void start() {
+        myController.start();
+        endTurn();
     }
 }
