@@ -54,8 +54,7 @@ public class GameCharacter {
     }
 
     void endTurn(){
-        int currentAge = this.getStat(StatType.Age);
-        this.setStat(StatType.Age, currentAge+1);
+        stats.increment(StatType.Age, 1);
     }
 
     @Override
@@ -75,5 +74,9 @@ public class GameCharacter {
     public void setName(String firstName, String lastName){
         name.firstName = firstName;
         name.lastName = lastName;
+    }
+
+    public void incrementStat(StatType statType, int num){
+        stats.increment(statType, num);
     }
 }
