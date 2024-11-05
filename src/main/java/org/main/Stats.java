@@ -13,7 +13,7 @@ public class Stats {
         StatType[] statTypes = StatType.values();
         stats = new HashMap<>(statTypes.length);
         for (StatType statType : statTypes) {
-            if (statType.equals(StatType.Money))
+            if (statType == StatType.Money)
                 stats.put(statType, StaticRandom.nextInt(10000));
             else
                 stats.put(statType, StaticRandom.nextInt(100));
@@ -28,8 +28,19 @@ public class Stats {
     @Override
     public String toString(){
         StringBuilder resultBuilder = new StringBuilder();
-        for (StatType statType : StatType.values())
-            resultBuilder.append(statType).append(": ").append(stats.get(statType)).append('\n');
+        for (StatType statType : StatType.values()) {
+            resultBuilder.append(statType).append(": ");
+
+            if (statType == StatType.Money)
+                resultBuilder.append("$");
+
+            resultBuilder.append(stats.get(statType));
+
+            if (statType == StatType.Age)
+                resultBuilder.append(" years old");
+
+            resultBuilder.append('\n');
+        }
         resultBuilder.deleteCharAt(resultBuilder.length()-1);
         return resultBuilder.toString();
     }
