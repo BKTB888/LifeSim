@@ -4,9 +4,10 @@ import org.helper.StatType;
 import org.helper.StaticRandom;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-public class Stats {
+public class Stats implements Iterable<Map.Entry<StatType, Integer>> {
     Map<StatType, Integer> stats;
 
     public Stats(){
@@ -19,12 +20,24 @@ public class Stats {
                 stats.put(statType, StaticRandom.nextInt(100));
         }
     }
+
     public Integer get(StatType type){
         return stats.get(type);
     }
+
     public void set(StatType statType, int num) {
         stats.put(statType, num);
+        if (    stats.get(statType) >= 100 &&
+                statType != StatType.Money &&
+                statType != StatType.Age)
+
+            stats.put(statType, 100);
     }
+
+    public void increment(StatType statType, int num){
+        this.set(statType, this.get(statType) + num);
+    }
+
     @Override
     public String toString(){
         StringBuilder resultBuilder = new StringBuilder();
@@ -43,5 +56,11 @@ public class Stats {
         }
         resultBuilder.deleteCharAt(resultBuilder.length()-1);
         return resultBuilder.toString();
+    }
+
+    //Could be improved
+    @Override
+    public Iterator<Map.Entry<StatType, Integer>> iterator() {
+        return stats.entrySet().iterator();
     }
 }

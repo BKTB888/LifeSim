@@ -7,6 +7,7 @@ public enum StatType {
     Happiness("Happiness"),
     Looks("Looks"),
     Strength("Strength"),
+    Smartness("Smartness"),
     Luck("Luck");
 
     private final String name;
