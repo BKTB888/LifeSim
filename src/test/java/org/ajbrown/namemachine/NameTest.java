@@ -32,15 +32,15 @@ public class NameTest {
 
         Name name1 = new Name( "Buzz", "Aldrin", Gender.MALE );
 
-        assertEquals("Buzz", name1.firstName());
-        assertEquals("Aldrin", name1.lastName());
-        assertEquals(Gender.MALE, name1.gender());
+        assertEquals("Buzz", name1.firstName);
+        assertEquals("Aldrin", name1.lastName);
+        assertEquals(Gender.MALE, name1.gender);
 
         Name name2 = new Name( "Sally", "Ride", Gender.FEMALE );
 
-        assertEquals("Sally", name2.firstName());
-        assertEquals("Ride", name2.lastName());
-        assertEquals(Gender.FEMALE, name2.gender());
+        assertEquals("Sally", name2.firstName);
+        assertEquals("Ride", name2.lastName);
+        assertEquals(Gender.FEMALE, name2.gender);
     }
 
     @Test

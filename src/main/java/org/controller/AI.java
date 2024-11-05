@@ -2,7 +2,7 @@ package org.controller;
 
 import org.helper.StaticRandom;
 import org.main.Action;
-import org.main.Charachter;
+import org.main.GameCharacter;
 import org.main.Event;
 
 import java.util.Comparator;
@@ -12,9 +12,8 @@ public class AI extends Controller{
     static Comparator<Action> baseLogic = (_, _) -> StaticRandom.nextInt(2) -1;
     Comparator<Action> decisionLogic = baseLogic;
 
-
-    public AI(Charachter character) {
-        this.myCharachter = character;
+    public AI(GameCharacter character) {
+        super(character);
     }
 
     public static void setBaseLogic(Comparator<Action> decisionLogic){
@@ -24,10 +23,10 @@ public class AI extends Controller{
 
     @Override
     public void start(){
-        Action choice = myCharachter.getActions().stream().max(decisionLogic)
+        Action choice = myCharacter.getActions().stream().max(decisionLogic)
                 .orElseThrow(() ->new IllegalArgumentException("Charachter has no actions!"));
 
-        choice.executeOn(myCharachter);
+        choice.executeOn(myCharacter);
     }
 
     @Override
@@ -36,6 +35,6 @@ public class AI extends Controller{
         Action choice = actionStream.max(decisionLogic)
                 .orElseThrow(() ->new IllegalArgumentException("Event has no actions!"));
 
-        choice.executeOn(myCharachter);
+        choice.executeOn(myCharacter);
     }
 }

@@ -20,7 +20,17 @@ package org.helper.ajbrown.namemachine;
  *
  * @author A.J. Brown <a href="mailto:aj@ajbrown.org">aj@ajbrown.org</a>
  */
-public record Name(String firstName, String lastName, Gender gender) {
+public class Name {
+
+  public String firstName;
+  public String lastName;
+  public Gender gender;
+
+  public Name(String firstName, String lastName, Gender gender){
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.gender = gender;
+  }
 
   @Override
   public String toString() {

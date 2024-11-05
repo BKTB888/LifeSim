@@ -12,8 +12,12 @@ public class Stats {
     public Stats(){
         StatType[] statTypes = StatType.values();
         stats = new HashMap<>(statTypes.length);
-        for (StatType statType : statTypes)
-            stats.put(statType, StaticRandom.nextInt(100));
+        for (StatType statType : statTypes) {
+            if (statType.equals(StatType.Money))
+                stats.put(statType, StaticRandom.nextInt(10000));
+            else
+                stats.put(statType, StaticRandom.nextInt(100));
+        }
     }
     public Integer get(StatType type){
         return stats.get(type);

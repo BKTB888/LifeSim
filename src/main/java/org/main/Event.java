@@ -6,9 +6,9 @@ import java.util.function.Function;
 public class Event {
     String name;
     List<Action> choices;
-    Function<Charachter, Double> chanceForCharachter;
+    Function<GameCharacter, Double> chanceForCharachter;
 
-    public Event(String name, List<Action> choices, Function<Charachter, Double> chanceFunction){
+    public Event(String name, List<Action> choices, Function<GameCharacter, Double> chanceFunction){
         this.name = name;
         this.choices = choices;
         this.chanceForCharachter = chanceFunction;
@@ -18,7 +18,7 @@ public class Event {
         return choices;
     }
 
-    public double chanceFor(Charachter charachter){
-        return chanceForCharachter.apply(charachter);
+    public double chanceFor(GameCharacter gameCharacter){
+        return chanceForCharachter.apply(gameCharacter);
     }
 }

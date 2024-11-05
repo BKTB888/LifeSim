@@ -1,12 +1,15 @@
 package org.controller;
 
 
-import org.main.Charachter;
+import org.main.GameCharacter;
 import org.main.Event;
 
 public abstract class Controller {
-    Charachter myCharachter;
+    GameCharacter myCharacter;
 
+    public Controller(GameCharacter character){
+        this.myCharacter = character;
+    }
 
     public abstract void start();
     public abstract void decide(Event event);

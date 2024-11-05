@@ -1,5 +1,6 @@
 package org.main;
 
+import org.controller.Human;
 import org.helper.StatType;
 import org.helper.ajbrown.namemachine.Gender;
 import org.helper.ajbrown.namemachine.Name;
@@ -10,7 +11,7 @@ import org.controller.Controller;
 
 import java.util.List;
 
-public class Charachter {
+public class GameCharacter {
     static NameGeneratorOptions nameOptions = new NameGeneratorOptions();
     static NameGenerator nameGen = new NameGenerator(nameOptions);
     static {
@@ -25,37 +26,52 @@ public class Charachter {
     Controller myController;
 
     public List<Action> getActions(){return availableActions;}
-    public Charachter(){
+    public GameCharacter(){
         this.name = nameGen.generateName();
-        this.gender = name.gender();
+        this.gender = name.gender;
         this.stats = new Stats();
         this.myController = new AI(this);
+    }
 
+    public GameCharacter(String firstName, String lastName, Gender gender){
+        this.name = new Name(firstName, lastName, gender);
+        this.gender = gender;
+        this.stats = new Stats();
+        this.myController = new AI(this);
     }
 
     public void giveEvent(Event event){
         myController.decide(event);
     }
 
-    public void set(StatType statType, int num){
+    public void setStat(StatType statType, int num){
         stats.set(statType, num);
     }
-    public Integer get(StatType statType){
+    public Integer getStat(StatType statType){
         return stats.get(statType);
     }
 
     void endTurn(){
-        int currentAge = this.get(StatType.Age);
-        this.set(StatType.Age, currentAge+1);
+        int currentAge = this.getStat(StatType.Age);
+        this.setStat(StatType.Age, currentAge+1);
     }
 
     @Override
     public String toString(){
-        return String.valueOf(name) + '\n' + stats;
+        return name + "\n\n" + stats;
     }
 
     public void start() {
         myController.start();
         endTurn();
+    }
+
+    public void makeHuman(){
+        myController = new Human(this);
+    }
+
+    public void setName(String firstName, String lastName){
+        name.firstName = firstName;
+        name.lastName = lastName;
     }
 }
