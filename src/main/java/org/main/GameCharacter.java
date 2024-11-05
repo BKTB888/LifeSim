@@ -13,9 +13,11 @@ import java.util.List;
 
 public class GameCharacter {
     static NameGeneratorOptions nameOptions = new NameGeneratorOptions();
-    static NameGenerator nameGen = new NameGenerator(nameOptions);
+    static NameGenerator nameGen;
     static {
         nameOptions.setRandomSeed(42L);
+        nameOptions.setGenderWeight(50);
+        nameGen  = new NameGenerator(nameOptions);
     }
 
     Name name;

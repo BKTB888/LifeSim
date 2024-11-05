@@ -6,28 +6,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.main.GameCharacter;
 
-import javax.swing.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CharacterPanelTest {
-    JFrame frame;
+    GameCharacter character;
     CharacterPanel characterPanel;
-    GameCharacter character = new GameCharacter("firstName", "lastName", Gender.FEMALE);
-
 
     @BeforeEach
     public void setUp(){
-        CharacterPanel characterPanel = new CharacterPanel(character);
-        JFrame frame = new JFrame();
-        frame.add(characterPanel);
-        frame.pack();
+        character = new GameCharacter("firstName", "lastName", Gender.FEMALE);
+        characterPanel = new CharacterPanel(character);
     }
 
-    /*
     @Test
-    public void refresh(){
+    public void refreshTest(){
         character.setName("Nagy", "Fejű");
-        characterPanel.characterData.getText();
+        characterPanel.refresh();
+        assertEquals(String.valueOf(character),characterPanel.characterData.getText());
     }
-
-     */
 }

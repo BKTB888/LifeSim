@@ -15,6 +15,8 @@
  */
 package org.helper.ajbrown.namemachine;
 
+import java.util.Objects;
+
 /**
  * Configuration options for {@link NameGenerator}.
  *
@@ -87,15 +89,13 @@ public class NameGeneratorOptions
     NameGeneratorOptions that = (NameGeneratorOptions) o;
 
     if (Double.compare(that.genderWeight, genderWeight) != 0) return false;
-    return randomSeed != null ? randomSeed.equals(that.randomSeed) : that.randomSeed == null;
+    return Objects.equals(randomSeed, that.randomSeed);
   }
 
   @Override
   public int hashCode() {
     int result;
-    long temp;
-    temp = Double.doubleToLongBits(genderWeight);
-    result = (int) (temp ^ (temp >>> 32));
+      result = Double.hashCode(genderWeight);
     result = 31 * result + (randomSeed != null ? randomSeed.hashCode() : 0);
     return result;
   }
