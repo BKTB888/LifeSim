@@ -18,7 +18,11 @@ package org.helper.ajbrown.namemachine;
 /**
  * @author A.J. Brown <a href="mailto:aj@ajbrown.org">aj@ajbrown.org</a>
  */
-public enum Gender
-{
-  FEMALE, MALE
+public enum Gender {
+  FEMALE, MALE;
+
+  @Override
+  public String toString(){
+    return this == Gender.FEMALE ? "Female" : "Male";
+  }
 }
