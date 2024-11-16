@@ -14,13 +14,12 @@ public class GameEventDialog extends JDialog {
         this.setModal(true);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        event.getChoices().forEach(action -> {
-
-            GameActionButton actionButton = new GameActionButton(action, character);
-            actionButton.addActionListener( _ -> this.dispose());
-            this.add(actionButton);
-
-        });
+        event.getChoices().stream()
+                .map(action -> new GameActionButton(action, character))
+                .forEach(button -> {
+                    button.addActionListener( _ -> this.dispose());
+                    this.add(button);
+                });
         this.pack();
         this.setVisible(true);
     }
