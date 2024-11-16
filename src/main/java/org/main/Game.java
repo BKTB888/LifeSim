@@ -1,13 +1,15 @@
 package org.main;
 
+import org.helper.Globals;
 import org.helper.StaticRandom;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Game {
     List<GameCharacter> characters;
-    List<Event> events;
+    List<GameEvent> events = Arrays.asList(Globals.baseEvents);
 
     public Game(int numOfCharacters){
         this.characters = new ArrayList<>(numOfCharacters);
@@ -25,7 +27,7 @@ public class Game {
 
     public void nextTurn(){
         for (GameCharacter character : characters) {
-            for (Event event : events)
+            for (GameEvent event : events)
                 if (StaticRandom.nextDouble() < event.chanceFor(character))
                     character.giveEvent(event);
             character.start();

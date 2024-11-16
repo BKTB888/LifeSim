@@ -1,7 +1,7 @@
 package org.controller;
 
 import org.gui.GameFrame;
-import org.main.Event;
+import org.main.GameEvent;
 import org.main.GameCharacter;
 
 public class Human extends Controller{
@@ -26,7 +26,7 @@ public class Human extends Controller{
     }
 
     @Override
-    public void decide(Event event) {
-
+    public void decide(GameEvent event) {
+        gameFrame.launchEvent(event);
     }
 }

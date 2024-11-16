@@ -1,38 +1,39 @@
 package org.controller;
 
 import org.helper.StaticRandom;
-import org.main.Action;
+import org.jetbrains.annotations.NotNull;
+import org.main.GameAction;
 import org.main.GameCharacter;
-import org.main.Event;
+import org.main.GameEvent;
 
 import java.util.Comparator;
 import java.util.stream.Stream;
 
 public class AI extends Controller{
-    static Comparator<Action> baseLogic = (_, _) -> StaticRandom.nextInt(2) -1;
-    Comparator<Action> decisionLogic = baseLogic;
+    static Comparator<GameAction> baseLogic = (_, _) -> StaticRandom.nextInt(2) -1;
+    Comparator<GameAction> decisionLogic = baseLogic;
 
     public AI(GameCharacter character) {
         super(character);
     }
 
-    public static void setBaseLogic(Comparator<Action> decisionLogic){
+    public static void setBaseLogic(Comparator<GameAction> decisionLogic){
         baseLogic = decisionLogic;
     }
 
 
     @Override
     public void start(){
-        Action choice = myCharacter.getActions().stream().max(decisionLogic)
+        GameAction choice = myCharacter.getActions().stream().max(decisionLogic)
                 .orElseThrow(() ->new IllegalArgumentException("Charachter has no actions!"));
 
         choice.executeOn(myCharacter);
     }
 
     @Override
-    public void decide(Event event){
-        Stream<Action> actionStream = event.getChoices().stream();
-        Action choice = actionStream.max(decisionLogic)
+    public void decide(@NotNull GameEvent event){
+        Stream<GameAction> actionStream = event.getChoices().stream();
+        GameAction choice = actionStream.max(decisionLogic)
                 .orElseThrow(() ->new IllegalArgumentException("Event has no actions!"));
 
         choice.executeOn(myCharacter);

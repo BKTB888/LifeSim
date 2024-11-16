@@ -2,23 +2,19 @@ package org.main;
 
 import org.helper.StatType;
 import org.helper.StaticRandom;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public class Stats implements Iterable<Map.Entry<StatType, Integer>> {
-    Map<StatType, Integer> stats;
+    Map<StatType, Integer> stats = new EnumMap<>(StatType.class);
 
     public Stats(){
         StatType[] statTypes = StatType.values();
-        stats = new HashMap<>(statTypes.length);
-        for (StatType statType : statTypes) {
-            if (statType == StatType.Money)
-                stats.put(statType, StaticRandom.nextInt(10000));
-            else
-                stats.put(statType, StaticRandom.nextInt(100));
-        }
+        for (StatType statType : statTypes)
+            stats.put(statType, StaticRandom.nextInt(100));
     }
 
     public Integer get(StatType type){
@@ -26,16 +22,21 @@ public class Stats implements Iterable<Map.Entry<StatType, Integer>> {
     }
 
     public void set(StatType statType, int num) {
-        stats.put(statType, num);
-        if (    stats.get(statType) >= 100 &&
-                statType != StatType.Money &&
-                statType != StatType.Age)
+        if (num > 100)
+            num = 100;
 
-            stats.put(statType, 100);
+        else if (num < 0)
+            num = 0;
+
+        stats.put(statType, num);
     }
 
-    public void increment(StatType statType, int num){
+    public void modify(StatType statType, int num){
         this.set(statType, this.get(statType) + num);
+    }
+
+    public void modify(@NotNull final Map<StatType, Integer> statMap){
+        statMap.forEach(this::modify);
     }
 
     @Override
@@ -44,13 +45,7 @@ public class Stats implements Iterable<Map.Entry<StatType, Integer>> {
         for (StatType statType : StatType.values()) {
             resultBuilder.append(statType).append(": ");
 
-            if (statType == StatType.Money)
-                resultBuilder.append("$");
-
             resultBuilder.append(stats.get(statType));
-
-            if (statType == StatType.Age)
-                resultBuilder.append(" years old");
 
             resultBuilder.append('\n');
         }
@@ -59,6 +54,7 @@ public class Stats implements Iterable<Map.Entry<StatType, Integer>> {
     }
 
     //Could be improved
+    @NotNull
     @Override
     public Iterator<Map.Entry<StatType, Integer>> iterator() {
         return stats.entrySet().iterator();

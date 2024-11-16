@@ -2,7 +2,7 @@ package org.controller;
 
 
 import org.main.GameCharacter;
-import org.main.Event;
+import org.main.GameEvent;
 
 public abstract class Controller {
     GameCharacter myCharacter;
@@ -12,5 +12,5 @@ public abstract class Controller {
     }
 
     public abstract void start();
-    public abstract void decide(Event event);
+    public abstract void decide(GameEvent event);
 }

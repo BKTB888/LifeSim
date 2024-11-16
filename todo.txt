@@ -1,0 +1,3 @@
+extend enumMap for stats
+display stats in table
+stats need to be refreshed
