@@ -12,8 +12,10 @@ import org.controller.AI;
 import org.controller.Controller;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GameCharacter {
@@ -73,7 +75,7 @@ public class GameCharacter {
         return  String.valueOf(name) + '\n' +
                 gender + '\n' +
                 age + " years old" + '\n' +
-                '$' + money + "\n\n"
+                '$' + NumberFormat.getNumberInstance(Locale.US).format(money) + "\n\n"
                 + stats;
     }
 
