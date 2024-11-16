@@ -6,6 +6,8 @@ import org.main.GameEvent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GameFrame extends JFrame{
     CharacterPanel characterPanel;
@@ -34,6 +36,11 @@ public class GameFrame extends JFrame{
     }
 
     public void launchEvent(GameEvent event){
-        new GameEventDialog(event, character).addWindowStateListener( _ -> this.refresh());
+        new GameEventDialog(event, character).addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                refresh();
+            }
+        });
     }
 }
