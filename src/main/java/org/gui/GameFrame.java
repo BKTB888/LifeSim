@@ -14,7 +14,7 @@ import java.awt.event.WindowEvent;
 public class GameFrame extends JFrame{
     CharacterPanel characterPanel;
     JButton ageButton = new JButton("Age");
-    JButton availableActions = new JButton("Actions");
+    JButton quit = new JButton("Quit");
     GameCharacter character;
 
     public GameFrame(GameCharacter character){
@@ -24,12 +24,14 @@ public class GameFrame extends JFrame{
         this.setLayout(new FlowLayout());
         characterPanel = new CharacterPanel(character);
 
+        JButton availableActions = new JButton("Actions");
         availableActions.addActionListener(_ -> {
             characterPanel.setVisible(false);
             this.add(addCloseButton(new GameActionsPanel(character.getActions(), character)));
             this.pack();
         });
 
+        characterPanel.add(quit);
         characterPanel.add(availableActions);
         characterPanel.add(ageButton);
         this.add(characterPanel);
@@ -52,6 +54,10 @@ public class GameFrame extends JFrame{
 
     public void addAgeListener(ActionListener ageListener){
         ageButton.addActionListener(ageListener);
+    }
+
+    public void addQuitListener(ActionListener quitListener){
+        quit.addActionListener(quitListener);
     }
 
     public void refresh(){

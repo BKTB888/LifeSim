@@ -7,5 +7,6 @@ public class Main {
         GameCharacter character = game.getRandomCharacter();
 
         character.makeHuman();
+        game.start();
     }
 }

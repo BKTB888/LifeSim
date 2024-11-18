@@ -24,7 +24,7 @@ public class Globals {
             new GameEvent("Money on the street",
                     new GameAction("Take it!", charachter -> {
                             charachter.money += 100;
-                            charachter.setStat(StatType.Luck, -20);
+                            charachter.modifyStat(StatType.Luck, -20);
                     }),
 
                     character -> character.getStat(StatType.Luck)* 0.005
