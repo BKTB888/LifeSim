@@ -2,7 +2,7 @@ package org.main;
 
 import org.controller.Human;
 import org.helper.Globals;
-import org.helper.StatType;
+import org.stats.StatType;
 import org.helper.StaticRandom;
 import org.helper.ajbrown.namemachine.Gender;
 import org.helper.ajbrown.namemachine.Name;
@@ -11,6 +11,7 @@ import org.helper.ajbrown.namemachine.NameGeneratorOptions;
 import org.controller.AI;
 import org.controller.Controller;
 import org.jetbrains.annotations.NotNull;
+import org.stats.Stats;
 
 import java.text.NumberFormat;
 import java.util.Arrays;

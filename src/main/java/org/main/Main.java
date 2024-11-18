@@ -1,8 +1,5 @@
 package org.main;
 
-
-import org.helper.Globals;
-
 public class Main {
     public static void main(String[] args) {
 
@@ -10,6 +7,5 @@ public class Main {
         GameCharacter character = game.getRandomCharacter();
 
         character.makeHuman();
-        character.giveEvent(Globals.baseEvents[0]);
     }
 }

@@ -1,6 +1,6 @@
 package org.main;
 
-import org.helper.StatType;
+import org.stats.StatType;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
