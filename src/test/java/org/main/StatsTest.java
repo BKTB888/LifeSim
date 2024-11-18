@@ -1,8 +1,9 @@
 package org.main;
 
-import org.helper.StatType;
+import org.stats.StatType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.stats.Stats;
 
 import java.util.Map;
 
@@ -49,9 +50,9 @@ class StatsTest {
         assertEquals(0, stats.get(StatType.Luck));
 
         stats.modify(Map.of(
-                StatType.Smartness, 1,
+                StatType.Happiness, 1,
                 StatType.Health, 1));
-        assertEquals(51, stats.get(StatType.Smartness));
+        assertEquals(51, stats.get(StatType.Happiness));
         assertEquals(51, stats.get(StatType.Health));
     }
 }
