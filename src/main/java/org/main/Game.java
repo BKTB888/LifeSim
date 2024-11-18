@@ -10,11 +10,12 @@ import java.util.List;
 public class Game {
     List<GameCharacter> characters;
     List<GameEvent> events = Arrays.asList(Globals.baseEvents);
+    boolean quit = false;
 
     public Game(int numOfCharacters){
         this.characters = new ArrayList<>(numOfCharacters);
         for (int i=0; i<numOfCharacters; ++i)
-            characters.add(new GameCharacter());
+            characters.add(new GameCharacter(this));
     }
     public Game(){
         Game game = new Game(500);
@@ -41,5 +42,15 @@ public class Game {
             resultBuilder.append(gameCharacter).append('\n');
         resultBuilder.deleteCharAt(resultBuilder.length()-1);
         return resultBuilder.toString();
+    }
+
+    public void start(){
+        while (!quit){
+            this.nextTurn();
+        }
+    }
+
+    public void quit(){
+        quit = true;
     }
 }

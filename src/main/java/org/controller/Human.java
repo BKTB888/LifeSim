@@ -13,6 +13,7 @@ public class Human extends Controller{
 
         gameFrame = new GameFrame(character);
         gameFrame.addAgeListener( _ -> endTurn = true);
+        gameFrame.addQuitListener(_ -> myCharacter.myGame.quit());
         gameFrame.setVisible(true);
     }
 

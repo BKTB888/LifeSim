@@ -36,23 +36,28 @@ public class GameCharacter {
     public int money;
     List<GameAction> availableActions = Arrays.asList(Globals.baseActions);
     Controller myController;
+    public final Game myGame;
 
     public List<GameAction> getActions(){return availableActions;}
-    public GameCharacter(){
+    public GameCharacter(Game myGame){
         this.name = nameGen.generateName();
         this.gender = name.gender;
         this.stats = new Stats();
 
         this.age = StaticRandom.nextInt(100);
         this.money = StaticRandom.nextInt(10000);
+        this.myGame = myGame;
 
         this.myController = new AI(this);
     }
 
-    public GameCharacter(String firstName, String lastName, Gender gender){
+    public GameCharacter(String firstName, String lastName, Gender gender, Game myGame){
         this.name = new Name(firstName, lastName, gender);
         this.gender = gender;
+        this.myGame = myGame;
         this.stats = new Stats();
+        this.age = StaticRandom.nextInt(100);
+        this.money = StaticRandom.nextInt(10000);
         this.myController = new AI(this);
     }
 
