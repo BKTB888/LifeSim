@@ -4,6 +4,8 @@ import org.gui.GameFrame;
 import org.main.GameEvent;
 import org.main.GameCharacter;
 
+import javax.swing.*;
+
 public class Human extends Controller{
     GameFrame gameFrame;
     volatile Boolean endTurn = false;
