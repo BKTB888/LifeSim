@@ -4,11 +4,11 @@ import org.main.GameCharacter;
 
 import javax.swing.*;
 
-public class CharacterPanel extends JPanel {
+public class GameCharacterPanel extends JPanel {
     JTextArea characterData;
     GameCharacter character;
 
-    public CharacterPanel(GameCharacter character){
+    public GameCharacterPanel(GameCharacter character){
         this.character = character;
         characterData = new JTextArea(String.valueOf(character));
         characterData.setEditable(false);

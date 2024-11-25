@@ -9,9 +9,9 @@ public class GameEvent {
     List<GameAction> choices;
     Function<GameCharacter, Double> chanceForCharachter;
 
-    public GameEvent(String name, GameAction[] choices, Function<GameCharacter, Double> chanceFunction){
+    public GameEvent(String name, List<GameAction> choices, Function<GameCharacter, Double> chanceFunction){
         this.name = name;
-        this.choices = new ArrayList<>(List.of(choices));
+        this.choices = choices;
         this.chanceForCharachter = chanceFunction;
     }
 

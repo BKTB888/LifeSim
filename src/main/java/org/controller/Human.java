@@ -1,27 +1,24 @@
 package org.controller;
 
-import org.gui.GameFrame;
+import org.gui.HumanFrame;
 import org.main.GameEvent;
 import org.main.GameCharacter;
 
-import javax.swing.*;
-
 public class Human extends Controller{
-    GameFrame gameFrame;
+    HumanFrame humanFrame;
     volatile Boolean endTurn = false;
 
     public Human(GameCharacter character){
         super(character);
 
-        gameFrame = new GameFrame(character);
-        gameFrame.addAgeListener( _ -> endTurn = true);
-        gameFrame.addQuitListener(_ -> myCharacter.myGame.quit());
-        gameFrame.setVisible(true);
+        humanFrame = new HumanFrame(character);
+        humanFrame.addAgeListener(_ -> endTurn = true);
+        humanFrame.setVisible(true);
     }
 
     @Override
     public void start() {
-        gameFrame.refresh();
+        humanFrame.refresh();
         while (!endTurn) {
             Thread.onSpinWait();
         }
@@ -30,6 +27,6 @@ public class Human extends Controller{
 
     @Override
     public void decide(GameEvent event) {
-        gameFrame.launchEvent(event);
+        humanFrame.launchEvent(event);
     }
 }

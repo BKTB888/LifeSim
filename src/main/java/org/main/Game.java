@@ -6,6 +6,7 @@ import org.helper.StaticRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Game {
     List<GameCharacter> characters;
@@ -24,6 +25,16 @@ public class Game {
 
     public GameCharacter getRandomCharacter(){
         return characters.get(StaticRandom.nextInt(characters.size()));
+    }
+
+    public List<GameCharacter> getCharacters(){
+        return characters;
+    }
+
+    public List<GameCharacter> getCharacters(int numOf){
+        return Stream.generate(this::getRandomCharacter)
+                .limit(numOf)
+                .toList();
     }
 
     public void nextTurn(){
@@ -48,9 +59,5 @@ public class Game {
         while (!quit){
             this.nextTurn();
         }
-    }
-
-    public void quit(){
-        quit = true;
     }
 }

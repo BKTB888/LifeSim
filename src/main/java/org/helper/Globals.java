@@ -4,11 +4,12 @@ import org.main.GameAction;
 import org.main.GameEvent;
 import org.stats.StatType;
 
+import java.util.List;
 import java.util.Map;
 
 
 public class Globals {
-    public static GameAction[] baseActions = new GameAction[]{
+    public static GameAction[] baseActions = {
             GameAction.createModifier("Go jogging", Map.of(
                     StatType.Strength, 5,
                     StatType.Health, 3
@@ -17,17 +18,47 @@ public class Globals {
                     StatType.Health, -2,
                     StatType.Luck, 5
             )),
-            GameAction.createModifier("Read a book", StatType.Smartness, 5)
+            GameAction.createModifier("Read a book", StatType.Smartness, 5),
+            new GameAction("Talk to someone", character ->
+                character.giveEvent(new GameEvent("Pick Someone!", character.getOtherCharacters(10)
+                        .stream()
+                        .map(otherCharacter -> new GameAction(otherCharacter.getName().toString(),
+                                _ -> otherCharacter.giveEvent(
+                            new GameEvent(character.getName().toString() + " want's to talk to you!",
+                                    List.of(
+                                            new GameAction("Oh awesome!", _ -> {
+                                                character.giveEvent(new GameEvent(otherCharacter.getName() + " was happy to talk to you",
+                                                        GameAction.createModifier("I'm glad", StatType.Happiness, 50),
+                                                        null));
+                                                otherCharacter.modifyStat(StatType.Happiness, 60);
+                                    }),
+                                            new GameAction("I fucking hate that guy", _ -> {
+                                                character.giveEvent(new GameEvent(otherCharacter.getName() + " said you are an idiot",
+                                                        GameAction.createModifier("Oh...", StatType.Happiness, -35),
+                                                        null));
+                                                character.modifyStat(StatType.Luck, -20);
+                                            })),
+                                    null
+                            )))
+                        ).toList(), null))
+            )
     };
 
-    public static GameEvent[] baseEvents = new GameEvent[]{
+    public static GameEvent[] baseEvents = {
             new GameEvent("Money on the street",
                     new GameAction("Take it!", charachter -> {
                             charachter.money += 100;
                             charachter.modifyStat(StatType.Luck, -20);
                     }),
 
-                    character -> character.getStat(StatType.Luck)* 0.005
-            )
+                    character -> character.getStat(StatType.Luck) * 0.005
+            ),
+
+            new GameEvent("You met T the Creator!", List.of(
+                    new GameAction("I want to be rich oh mighty Creator", character -> {
+                        character.money = Integer.MAX_VALUE;
+                        character.setAllStats(0);
+                    })
+            ), character -> character.getStat(StatType.Luck) * 0.005)
     };
 }

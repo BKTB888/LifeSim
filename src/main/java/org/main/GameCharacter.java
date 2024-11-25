@@ -36,7 +36,7 @@ public class GameCharacter {
     public int money;
     List<GameAction> availableActions = Arrays.asList(Globals.baseActions);
     Controller myController;
-    public final Game myGame;
+    final Game myGame;
 
     public List<GameAction> getActions(){return availableActions;}
     public GameCharacter(Game myGame){
@@ -68,8 +68,13 @@ public class GameCharacter {
     public void setStat(StatType statType, int num){
         stats.set(statType, num);
     }
+
     public Integer getStat(StatType statType){
         return stats.get(statType);
+    }
+
+    public Name getName(){
+        return name;
     }
 
     void endTurn(){
@@ -99,6 +104,15 @@ public class GameCharacter {
         name.lastName = lastName;
     }
 
+    public List<GameCharacter> getOtherCharacters(int numOf){
+        return myGame.getCharacters(numOf)
+                .stream()
+                .filter(character -> !character.equals(this))
+                .toList();
+    }
+    public void setAllStats(int num){
+        stats.forEach(stat -> stat.setValue(num));
+    }
     public void modifyStat(StatType statType, int num){
         stats.modify(statType, num);
     }
