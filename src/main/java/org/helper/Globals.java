@@ -1,6 +1,7 @@
 package org.helper;
 
 import org.main.GameAction;
+import org.main.GameCharacter;
 import org.main.GameEvent;
 import org.stats.StatType;
 
@@ -58,7 +59,14 @@ public class Globals {
                     new GameAction("I want to be rich oh mighty Creator", character -> {
                         character.money = Integer.MAX_VALUE;
                         character.setAllStats(0);
-                    })
-            ), character -> character.getStat(StatType.Luck) * 0.005)
+                    })),
+
+                    character -> character.getStat(StatType.Luck) * 0.005
+            ),
+
+            new GameEvent("You died!",
+                    new GameAction("uoghft...", GameCharacter::die),
+                    character ->(100 - character.getStat(StatType.Health)) * 0.0005
+            )
     };
 }

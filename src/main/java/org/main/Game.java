@@ -1,5 +1,7 @@
 package org.main;
 
+import org.controller.Controller;
+import org.controller.Human;
 import org.helper.Globals;
 import org.helper.StaticRandom;
 
@@ -11,7 +13,6 @@ import java.util.stream.Stream;
 public class Game {
     List<GameCharacter> characters;
     List<GameEvent> events = Arrays.asList(Globals.baseEvents);
-    boolean quit = false;
 
     public Game(int numOfCharacters){
         this.characters = new ArrayList<>(numOfCharacters);
@@ -38,12 +39,16 @@ public class Game {
     }
 
     public void nextTurn(){
-        for (GameCharacter character : characters) {
+        for (GameCharacter character : List.copyOf(characters)) {
             for (GameEvent event : events)
                 if (StaticRandom.nextDouble() < event.chanceFor(character))
                     character.giveEvent(event);
-            character.start();
         }
+        characters.forEach(GameCharacter::start);
+    }
+
+    public void killCharacter(GameCharacter character){
+        characters.remove(character);
     }
 
     @Override
@@ -56,8 +61,14 @@ public class Game {
     }
 
     public void start(){
-        while (!quit){
+        while (shouldQuit()){
             this.nextTurn();
         }
+    }
+    public boolean shouldQuit(){
+        return characters.stream()
+                .map(GameCharacter::getController)
+                .map(Controller::getClass)
+                .anyMatch(class1 -> class1.equals(Human.class));
     }
 }

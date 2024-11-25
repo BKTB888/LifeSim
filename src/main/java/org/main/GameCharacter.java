@@ -77,6 +77,10 @@ public class GameCharacter {
         return name;
     }
 
+    public Controller getController(){
+        return myController;
+    }
+
     void endTurn(){
         ++age;
     }
@@ -107,8 +111,15 @@ public class GameCharacter {
     public List<GameCharacter> getOtherCharacters(int numOf){
         return myGame.getCharacters(numOf)
                 .stream()
-                .filter(character -> !character.equals(this))
+                .filter(character -> character != this)
                 .toList();
+    }
+
+    public void die(){
+        myGame.killCharacter(this);
+        if (myController instanceof Human){
+            ((Human) myController).disposeWindow();
+        }
     }
     public void setAllStats(int num){
         stats.forEach(stat -> stat.setValue(num));

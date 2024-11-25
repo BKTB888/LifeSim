@@ -29,4 +29,8 @@ public class Human extends Controller{
     public void decide(GameEvent event) {
         humanFrame.launchEvent(event);
     }
+
+    public void disposeWindow(){
+        humanFrame.dispose();
+    }
 }

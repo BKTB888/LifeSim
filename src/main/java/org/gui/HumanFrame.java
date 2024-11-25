@@ -15,7 +15,7 @@ public class HumanFrame extends JFrame{
     JButton ageButton = new JButton("Age");
     JButton quit = new JButton("Quit");
     GameCharacter character;
-    JComponent currentPanel = characterPanel;
+    JComponent currentPanel;
 
     public HumanFrame(@NotNull GameCharacter character){
         this.character = character;
@@ -23,6 +23,7 @@ public class HumanFrame extends JFrame{
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
         characterPanel = new GameCharacterPanel(character);
+        currentPanel = characterPanel;
 
         JButton availableActions = new JButton("Actions");
         JButton othersButton = new JButton("Other Characters");
