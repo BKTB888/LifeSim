@@ -15,12 +15,14 @@
  */
 package org.helper.ajbrown.namemachine;
 
+import java.io.Serializable;
+
 /**
  * An instance of a generated name.  Name's are immutable.
  *
  * @author A.J. Brown <a href="mailto:aj@ajbrown.org">aj@ajbrown.org</a>
  */
-public class Name {
+public class Name implements Serializable {
 
   public String firstName;
   public String lastName;

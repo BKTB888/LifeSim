@@ -33,7 +33,7 @@ public class Globals {
                                                         null));
                                                 otherCharacter.modifyStat(StatType.Happiness, 60);
                                     }),
-                                            new GameAction("I fucking hate that guy", _ -> {
+                                            new GameAction("I hate that guy", _ -> {
                                                 character.giveEvent(new GameEvent(otherCharacter.getName() + " said you are an idiot",
                                                         GameAction.createModifier("Oh...", StatType.Happiness, -35),
                                                         null));

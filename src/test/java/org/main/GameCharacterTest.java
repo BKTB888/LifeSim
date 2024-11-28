@@ -1,17 +1,44 @@
 package org.main;
 
+import org.helper.ajbrown.namemachine.Gender;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameCharacterTest {
+    GameCharacter gameCharacter;
 
+    @BeforeEach
+    public void setUp(){
+        gameCharacter = new GameCharacter("Tivadar", "Bánfalvi-Kovács", Gender.MALE,new Game());
+        gameCharacter.setAllStats(50);
+    }
     @Test
     public void endTurnTest(){
-        GameCharacter gameCharacter = new GameCharacter();
         gameCharacter.age = 42;
         gameCharacter.endTurn();
         assertEquals(43, gameCharacter.age);
+    }
+
+    @Test
+    public void serializable() throws IOException, ClassNotFoundException {
+        // Serialize
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
+        objectOut.writeObject(gameCharacter);
+        objectOut.flush();
+
+        // Deserialize
+        ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+        ObjectInputStream objectIn = new ObjectInputStream(byteIn);
+        GameCharacter deserializedCharacter = (GameCharacter) objectIn.readObject();
+
+        // Assertions
+        assertNotNull(deserializedCharacter);
+        assertEquals(gameCharacter, deserializedCharacter);
     }
 
 }

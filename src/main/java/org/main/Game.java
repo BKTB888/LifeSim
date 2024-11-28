@@ -5,19 +5,28 @@ import org.controller.Human;
 import org.helper.Globals;
 import org.helper.StaticRandom;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
-public class Game {
+public class Game implements Serializable{
+
     List<GameCharacter> characters;
-    List<GameEvent> events = Arrays.asList(Globals.baseEvents);
+    transient List<GameEvent> events = Arrays.asList(Globals.baseEvents);
 
     public Game(int numOfCharacters){
         this.characters = new ArrayList<>(numOfCharacters);
         for (int i=0; i<numOfCharacters; ++i)
             characters.add(new GameCharacter(this));
+    }
+    public Game(int numOfCharacters,int numOfHumans){
+        Game temp= new Game(numOfCharacters);
+        this.characters = temp.characters;
+        this.events = temp.events;
+
+        this.getRandomCharacters(numOfHumans).forEach(GameCharacter::makeHuman);
     }
     public Game(){
         Game game = new Game(500);
@@ -32,10 +41,10 @@ public class Game {
         return characters;
     }
 
-    public List<GameCharacter> getCharacters(int numOf){
-        return Stream.generate(this::getRandomCharacter)
-                .limit(numOf)
-                .toList();
+    public List<GameCharacter> getRandomCharacters(int numOf){
+        List<GameCharacter> shuffledList = new ArrayList<>(characters);
+        Collections.shuffle(shuffledList, StaticRandom.rng);
+        return shuffledList.subList(0, numOf);
     }
 
     public void nextTurn(){
@@ -70,5 +79,19 @@ public class Game {
                 .map(GameCharacter::getController)
                 .map(Controller::getClass)
                 .anyMatch(class1 -> class1.equals(Human.class));
+    }
+
+    public void save(String name) throws IOException {
+        FileOutputStream fileOut = new FileOutputStream("saves/" + name + ".txt");
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(characters);
+    }
+
+    public Game load(String name) throws IOException, ClassNotFoundException {
+        FileInputStream fileIn = new FileInputStream("saves/" + name + ".txt");
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        this.characters = (List<GameCharacter>) in.readObject();
+        characters.forEach(character -> character.setGame(this));
+        return this;
     }
 }

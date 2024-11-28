@@ -19,7 +19,7 @@ public class HumanFrame extends JFrame{
 
     public HumanFrame(@NotNull GameCharacter character){
         this.character = character;
-        this.setTitle("LifeSim");
+        this.setTitle(character.getName().toString());
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
         characterPanel = new GameCharacterPanel(character);

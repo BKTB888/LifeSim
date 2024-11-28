@@ -15,10 +15,12 @@
  */
 package org.helper.ajbrown.namemachine;
 
+import java.io.Serializable;
+
 /**
  * @author A.J. Brown <a href="mailto:aj@ajbrown.org">aj@ajbrown.org</a>
  */
-public enum Gender {
+public enum Gender implements Serializable {
   FEMALE, MALE;
 
   @Override

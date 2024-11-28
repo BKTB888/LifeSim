@@ -13,17 +13,15 @@ import org.controller.Controller;
 import org.jetbrains.annotations.NotNull;
 import org.stats.Stats;
 
+import java.io.*;
 import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
-public class GameCharacter {
-    static NameGeneratorOptions nameOptions = new NameGeneratorOptions();
-    static NameGenerator nameGen;
+public class GameCharacter implements Serializable{
+    private static final NameGeneratorOptions nameOptions = new NameGeneratorOptions();
+    private static final NameGenerator nameGen;
     static {
-        nameOptions.setRandomSeed(42L);
+        nameOptions.setRandomSeed(StaticRandom.nextLong());
         nameOptions.setGenderWeight(50);
         nameGen  = new NameGenerator(nameOptions);
     }
@@ -34,9 +32,9 @@ public class GameCharacter {
     Stats stats;
     int age;
     public int money;
-    List<GameAction> availableActions = Arrays.asList(Globals.baseActions);
-    Controller myController;
-    final Game myGame;
+    transient List<GameAction> availableActions = Arrays.asList(Globals.baseActions);
+    transient Controller myController;
+    transient Game myGame;
 
     public List<GameAction> getActions(){return availableActions;}
     public GameCharacter(Game myGame){
@@ -59,6 +57,10 @@ public class GameCharacter {
         this.age = StaticRandom.nextInt(100);
         this.money = StaticRandom.nextInt(10000);
         this.myController = new AI(this);
+    }
+
+    public void setGame(Game game){
+        this.myGame = game;
     }
 
     public void giveEvent(GameEvent event){
@@ -109,7 +111,7 @@ public class GameCharacter {
     }
 
     public List<GameCharacter> getOtherCharacters(int numOf){
-        return myGame.getCharacters(numOf)
+        return myGame.getRandomCharacters(numOf)
                 .stream()
                 .filter(character -> character != this)
                 .toList();
@@ -129,5 +131,40 @@ public class GameCharacter {
     }
     public void modifyStats(@NotNull final Map<StatType, Integer> statMap){
         statMap.forEach(stats::modify);
+    }
+
+    @Serial
+    private void writeObject(@NotNull ObjectOutputStream out) throws IOException{
+        out.defaultWriteObject();
+        out.write(myController instanceof Human ? 1 : 0);
+    }
+
+    @Serial
+    private void readObject(@NotNull ObjectInputStream in) throws IOException, ClassNotFoundException{
+        in.defaultReadObject();
+        if (in.read() == 1)
+            myController = new Human(this);
+        else {
+            myController = new AI(this);
+        }
+        availableActions = List.of(Globals.baseActions);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true; // Check if comparing the same reference
+        if (o == null || getClass() != o.getClass()) return false; // Ensure class match
+
+        GameCharacter character = (GameCharacter) o; // Cast to the specific class
+
+        return age == character.age && // Compare primitive fields
+                money == character.money && // Compare primitive fields
+                Objects.equals(stats, character.stats);
+        // Exclude transient fields `availableActions` and `myController`
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(age, money, stats);
     }
 }

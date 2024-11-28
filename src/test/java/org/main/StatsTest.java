@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.stats.Stats;
 
+import java.io.*;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,5 +55,21 @@ class StatsTest {
                 StatType.Health, 1));
         assertEquals(51, stats.get(StatType.Happiness));
         assertEquals(51, stats.get(StatType.Health));
+    }
+
+    @Test
+    public void serializable() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ObjectOutputStream objectOut = new ObjectOutputStream(byteOut);
+        objectOut.writeObject(stats);
+        objectOut.flush();
+
+        ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+        ObjectInputStream objectIn = new ObjectInputStream(byteIn);
+        Stats deserializedStats = (Stats) objectIn.readObject();
+
+        // Assert: Check that the deserialized object is equal to the original
+        assertNotNull(deserializedStats);
+        assertEquals(stats, deserializedStats);
     }
 }
