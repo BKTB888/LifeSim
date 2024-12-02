@@ -31,4 +31,9 @@ public class GameAction {
     public static GameAction createModifier(String name, final Map<StatType, Integer> statsMap){
         return new GameAction(name, character -> character.modifyStats(statsMap));
     }
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }
