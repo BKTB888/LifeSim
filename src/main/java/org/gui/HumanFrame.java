@@ -9,18 +9,66 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class HumanFrame extends JFrame{
     GameCharacterPanel characterPanel;
     JButton ageButton = new JButton("Age");
-    JButton quit = new JButton("Quit");
     GameCharacter character;
     JComponent currentPanel;
 
     public HumanFrame(@NotNull GameCharacter character){
         this.character = character;
         this.setTitle(character.getName().toString());
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int response = JOptionPane.showConfirmDialog(
+                        null,
+                        "Do you want to save?", // The message
+                        "Saving the game",           // The title
+                        JOptionPane.YES_NO_CANCEL_OPTION // Yes and No buttons
+                );
+
+                switch (response) {
+                    case JOptionPane.YES_OPTION -> {
+                        String name = JOptionPane.showInputDialog(
+                                null,
+                                "Name of the save game:",
+                                "Saving",
+                                JOptionPane.QUESTION_MESSAGE
+                        );
+                        if (name == null) return;
+
+                        try {
+                            character.getGame().save(name);
+                        } catch (IOException _) {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "An error occurred while saving your game!",
+                                    "Save Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                        }
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Game Saved",
+                                "Success",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
+                        character.getGame().quit();
+                        ageButton.doClick();
+                        HumanFrame.this.dispose();
+                    }
+                    case JOptionPane.NO_OPTION -> {
+                        character.getGame().quit();
+                        ageButton.doClick();
+                        HumanFrame.this.dispose();
+                    }
+                }
+            }
+        });
         this.setLayout(new FlowLayout());
         characterPanel = new GameCharacterPanel(character);
         currentPanel = characterPanel;
@@ -40,7 +88,6 @@ public class HumanFrame extends JFrame{
             this.pack();
         });
 
-        characterPanel.add(quit);
         characterPanel.add(availableActions);
         characterPanel.add(ageButton);
 
@@ -96,10 +143,6 @@ public class HumanFrame extends JFrame{
 
     public void addAgeListener(ActionListener ageListener){
         ageButton.addActionListener(ageListener);
-    }
-
-    public void addQuitListener(ActionListener quitListener){
-        quit.addActionListener(quitListener);
     }
 
     public void refresh(){

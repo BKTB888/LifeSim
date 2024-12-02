@@ -141,13 +141,14 @@ public class GameCharacter implements Serializable{
 
     @Serial
     private void readObject(@NotNull ObjectInputStream in) throws IOException, ClassNotFoundException{
+        availableActions = List.of(Globals.baseActions);
+
         in.defaultReadObject();
         if (in.read() == 1)
             myController = new Human(this);
         else {
             myController = new AI(this);
         }
-        availableActions = List.of(Globals.baseActions);
     }
 
     @Override
@@ -160,7 +161,10 @@ public class GameCharacter implements Serializable{
         return age == character.age && // Compare primitive fields
                 money == character.money && // Compare primitive fields
                 Objects.equals(stats, character.stats);
-        // Exclude transient fields `availableActions` and `myController`
+    }
+
+    public Game getGame(){
+        return myGame;
     }
 
     @Override

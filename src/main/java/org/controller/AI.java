@@ -25,7 +25,7 @@ public class AI extends Controller{
     @Override
     public void start(){
         GameAction choice = myCharacter.getActions().stream().max(decisionLogic)
-                .orElseThrow(() ->new IllegalArgumentException("Charachter has no actions!"));
+                .orElseThrow(() ->new IllegalArgumentException("Character has no actions!"));
 
         choice.executeOn(myCharacter);
     }

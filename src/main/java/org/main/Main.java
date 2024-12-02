@@ -4,7 +4,7 @@ import org.gui.MainFrame;
 
 public class Main {
     public static void main(String[] args) {
-        MainFrame mf = new MainFrame();
+        MainFrame mf = new MainFrame(500, 1);
         mf.setVisible(true);
     }
 }

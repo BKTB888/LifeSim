@@ -14,7 +14,8 @@ import java.util.List;
 public class Game implements Serializable{
 
     List<GameCharacter> characters;
-    transient List<GameEvent> events = Arrays.asList(Globals.baseEvents);
+    transient List<GlobalEvent> events = Arrays.asList(Globals.baseEvents);
+    private volatile boolean quit = false;
 
     public Game(int numOfCharacters){
         this.characters = new ArrayList<>(numOfCharacters);
@@ -24,6 +25,7 @@ public class Game implements Serializable{
     public Game(int numOfCharacters,int numOfHumans){
         Game temp= new Game(numOfCharacters);
         this.characters = temp.characters;
+        characters.forEach(character -> character.setGame(this));
         this.events = temp.events;
 
         this.getRandomCharacters(numOfHumans).forEach(GameCharacter::makeHuman);
@@ -31,6 +33,7 @@ public class Game implements Serializable{
     public Game(){
         Game game = new Game(500);
         this.characters = game.characters;
+        characters.forEach(character -> character.setGame(this));
     }
 
     public GameCharacter getRandomCharacter(){
@@ -49,7 +52,7 @@ public class Game implements Serializable{
 
     public void nextTurn(){
         for (GameCharacter character : List.copyOf(characters)) {
-            for (GameEvent event : events)
+            for (GlobalEvent event : events)
                 if (StaticRandom.nextDouble() < event.chanceFor(character))
                     character.giveEvent(event);
         }
@@ -70,11 +73,10 @@ public class Game implements Serializable{
     }
 
     public void start(){
-        while (shouldQuit()){
+        while (humansRemaining() && !quit)
             this.nextTurn();
-        }
     }
-    public boolean shouldQuit(){
+    public boolean humansRemaining(){
         return characters.stream()
                 .map(GameCharacter::getController)
                 .map(Controller::getClass)
@@ -87,11 +89,16 @@ public class Game implements Serializable{
         out.writeObject(characters);
     }
 
-    public Game load(String name) throws IOException, ClassNotFoundException {
+    public void load(String name) throws IOException, ClassNotFoundException {
         FileInputStream fileIn = new FileInputStream("saves/" + name + ".txt");
         ObjectInputStream in = new ObjectInputStream(fileIn);
+
         this.characters = (List<GameCharacter>) in.readObject();
         characters.forEach(character -> character.setGame(this));
-        return this;
+        quit = false;
+    }
+
+    public void quit(){
+        quit = true;
     }
 }

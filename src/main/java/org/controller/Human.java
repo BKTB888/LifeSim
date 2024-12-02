@@ -13,11 +13,11 @@ public class Human extends Controller{
 
         humanFrame = new HumanFrame(character);
         humanFrame.addAgeListener(_ -> endTurn = true);
-        humanFrame.setVisible(true);
     }
 
     @Override
     public void start() {
+        humanFrame.setVisible(true);
         humanFrame.refresh();
         while (!endTurn) {
             Thread.onSpinWait();
@@ -27,6 +27,7 @@ public class Human extends Controller{
 
     @Override
     public void decide(GameEvent event) {
+        humanFrame.setVisible(true);
         humanFrame.launchEvent(event);
     }
 
