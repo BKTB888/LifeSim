@@ -66,15 +66,6 @@ public class Game{
         characters.remove(character);
     }
 
-    @Override
-    public String toString(){
-        StringBuilder resultBuilder = new StringBuilder();
-        for (GameCharacter gameCharacter : characters)
-            resultBuilder.append(gameCharacter).append('\n');
-        resultBuilder.deleteCharAt(resultBuilder.length()-1);
-        return resultBuilder.toString();
-    }
-
     public void start(){
         while (humansRemaining() && !quit)
             this.nextTurn();

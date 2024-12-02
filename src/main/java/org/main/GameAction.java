@@ -16,8 +16,8 @@ public class GameAction {
         this.action = action;
     }
 
-    public void executeOn(GameCharacter gameCharacter){
-        action.accept(gameCharacter);
+    public void executeOn(GameCharacter character){
+        action.accept(character);
     }
 
     @NotNull
@@ -30,5 +30,10 @@ public class GameAction {
     @Contract(value = "_, _ -> new", pure = true)
     public static GameAction createModifier(String name, final Map<StatType, Integer> statsMap){
         return new GameAction(name, character -> character.modifyStats(statsMap));
+    }
+
+    @Override
+    public String toString(){
+        return name;
     }
 }
