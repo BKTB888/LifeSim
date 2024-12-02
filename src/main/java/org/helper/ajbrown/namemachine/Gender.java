@@ -15,14 +15,17 @@
  */
 package org.helper.ajbrown.namemachine;
 
-import java.io.Serializable;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author A.J. Brown <a href="mailto:aj@ajbrown.org">aj@ajbrown.org</a>
  */
-public enum Gender implements Serializable {
+public enum Gender{
   FEMALE, MALE;
 
+  @NotNull
+  @Contract(pure = true)
   @Override
   public String toString(){
     return this == Gender.FEMALE ? "Female" : "Male";

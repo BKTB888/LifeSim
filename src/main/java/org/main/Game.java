@@ -4,14 +4,12 @@ import org.controller.Controller;
 import org.controller.Human;
 import org.helper.Globals;
 import org.helper.StaticRandom;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class Game implements Serializable{
+public class Game{
 
     List<GameCharacter> characters;
     transient List<GlobalEvent> events = Arrays.asList(Globals.baseEvents);
@@ -32,6 +30,11 @@ public class Game implements Serializable{
     }
     public Game(){
         Game game = new Game(500);
+        this.characters = game.characters;
+        characters.forEach(character -> character.setGame(this));
+    }
+
+    public Game(@NotNull Game game) {
         this.characters = game.characters;
         characters.forEach(character -> character.setGame(this));
     }
@@ -100,5 +103,18 @@ public class Game implements Serializable{
 
     public void quit(){
         quit = true;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true; // Check if comparing the same reference
+        if (o == null || getClass() != o.getClass()) return false; // Ensure class match
+
+        return characters.equals(((Game) o).characters);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(characters);
     }
 }

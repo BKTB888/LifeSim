@@ -1,9 +1,7 @@
-package org.main;
+package org.stats;
 
-import org.stats.StatType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.stats.Stats;
 
 import java.io.*;
 import java.util.Map;
@@ -72,4 +70,5 @@ class StatsTest {
         assertNotNull(deserializedStats);
         assertEquals(stats, deserializedStats);
     }
+
 }
