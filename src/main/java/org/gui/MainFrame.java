@@ -2,7 +2,6 @@ package org.gui;
 
 import org.main.Game;
 
-import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -42,23 +41,26 @@ public class MainFrame extends JFrame {
 
         loadGameButton.addActionListener(_ -> {
             try (Stream<Path> fileStream = Files.list(Paths.get("saves"))) {
-                List<JButton> buttons = fileStream.filter(Files::isRegularFile)
-                        .map(Path::getFileName)
-                        .map(String::valueOf)
-                        .filter(name -> name.contains(".txt"))
-                        .map(name -> name.substring(0, name.length() - 4))
-                        .map(JButton::new)
-                        .toList();
+                String[] options = fileStream.filter(Files::isRegularFile)
+                    .map(Path::getFileName)
+                    .map(String::valueOf)
+                    .filter(name -> name.contains(".txt"))
+                    .map(name -> name.substring(0, name.length() - 4))
+                    .toArray(String[]::new);
 
                 JDialog savedGames = new JDialog();
                 savedGames.setTitle("Saved Games");
                 savedGames.setLayout(new FlowLayout());
-                buttons.forEach(savedGames::add);
+                JComboBox<String> selector = new JComboBox<>(options);
+                JButton selectButton = new JButton("Select!");
+
+                savedGames.add(selector);
+                savedGames.add(selectButton);
                 savedGames.pack();
 
-                buttons.forEach(button -> button.addActionListener(_ -> {
+                selectButton.addActionListener(_ -> {
                     try {
-                        game.load(button.getText());
+                        game.load((String) selector.getSelectedItem());
                         new Thread(() -> {
                             game.start();
                             this.setVisible(true);
@@ -68,7 +70,7 @@ public class MainFrame extends JFrame {
                     } catch (IOException | ClassNotFoundException ex) {
                         loadError.setVisible(true);
                     }
-                }));
+                });
 
                 savedGames.setVisible(true);
 
