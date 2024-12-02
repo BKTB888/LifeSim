@@ -17,7 +17,7 @@ public class Stat implements Map.Entry<StatType, Integer> {
 
     @Override
     public String toString(){
-        return getKey() + ": " + getValue().toString();
+        return getKey().getStringStat(getValue());
     }
 
     @Override

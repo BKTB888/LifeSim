@@ -3,6 +3,7 @@ package org.main;
 import org.helper.ajbrown.namemachine.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.stats.StatType;
 
 import java.io.*;
 
@@ -14,13 +15,12 @@ class GameCharacterTest {
     @BeforeEach
     public void setUp(){
         gameCharacter = new GameCharacter("Tivadar", "Bánfalvi-Kovács", Gender.MALE,new Game());
-        gameCharacter.setAllStats(50);
+        gameCharacter.stats.forEach(stat -> stat.setValue(50));
     }
     @Test
     public void endTurnTest(){
-        gameCharacter.age = 42;
         gameCharacter.endTurn();
-        assertEquals(43, gameCharacter.age);
+        assertEquals(51, gameCharacter.getStat(StatType.Age));
     }
 
     @Test

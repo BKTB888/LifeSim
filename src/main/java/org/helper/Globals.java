@@ -45,18 +45,18 @@ public class Globals {
 
     public static GlobalEvent[] baseEvents = {
             new GlobalEvent("Money on the street",
-                    new GameAction("Take it!", charachter -> {
-                            charachter.money += 100;
-                            charachter.modifyStat(StatType.Luck, -20);
-                    }),
+                    GameAction.createModifier("Take it!", Map.of(
+                            StatType.Money,100,
+                            StatType.Luck, -20
+                    )),
 
                     character -> character.getStat(StatType.Luck) * 0.005
             ),
 
             new GlobalEvent("You met T the Creator!", List.of(
                     new GameAction("I want to be rich oh mighty Creator", character -> {
-                        character.money = Integer.MAX_VALUE;
-                        character.setAllStats(0);
+                        character.setStat(StatType.Money, Integer.MAX_VALUE);
+                        character.setAllBaseStats(0);
                     })),
 
                     character -> character.getStat(StatType.Luck) * 0.005

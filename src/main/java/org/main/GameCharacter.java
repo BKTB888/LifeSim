@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import org.stats.Stats;
 
 import java.io.*;
-import java.text.NumberFormat;
 import java.util.*;
 
 public class GameCharacter implements Serializable{
@@ -30,8 +29,6 @@ public class GameCharacter implements Serializable{
     Gender gender;
 
     Stats stats;
-    int age;
-    public int money;
     transient List<GameAction> availableActions = Arrays.asList(Globals.baseActions);
     transient Controller myController;
     transient Game myGame;
@@ -42,8 +39,6 @@ public class GameCharacter implements Serializable{
         this.gender = name.gender;
         this.stats = new Stats();
 
-        this.age = StaticRandom.nextInt(100);
-        this.money = StaticRandom.nextInt(10000);
         this.myGame = myGame;
 
         this.myController = new AI(this);
@@ -54,8 +49,6 @@ public class GameCharacter implements Serializable{
         this.gender = gender;
         this.myGame = myGame;
         this.stats = new Stats();
-        this.age = StaticRandom.nextInt(100);
-        this.money = StaticRandom.nextInt(10000);
         this.myController = new AI(this);
     }
 
@@ -84,15 +77,13 @@ public class GameCharacter implements Serializable{
     }
 
     void endTurn(){
-        ++age;
+        stats.modify(StatType.Age, 1);
     }
 
     @Override
     public String toString(){
         return  String.valueOf(name) + '\n' +
-                gender + '\n' +
-                age + " years old" + '\n' +
-                '$' + NumberFormat.getNumberInstance(Locale.US).format(money) + "\n\n"
+                gender + '\n'
                 + stats;
     }
 
@@ -123,8 +114,8 @@ public class GameCharacter implements Serializable{
             ((Human) myController).disposeWindow();
         }
     }
-    public void setAllStats(int num){
-        stats.forEach(stat -> stat.setValue(num));
+    public void setAllBaseStats(int num){
+        Arrays.stream(StatType.baseValues()).forEach(statType -> stats.set(statType, num));
     }
     public void modifyStat(StatType statType, int num){
         stats.modify(statType, num);
@@ -158,9 +149,7 @@ public class GameCharacter implements Serializable{
 
         GameCharacter character = (GameCharacter) o; // Cast to the specific class
 
-        return age == character.age && // Compare primitive fields
-                money == character.money && // Compare primitive fields
-                Objects.equals(stats, character.stats);
+        return Objects.equals(stats, character.stats);
     }
 
     public Game getGame(){
@@ -169,6 +158,6 @@ public class GameCharacter implements Serializable{
 
     @Override
     public int hashCode(){
-        return Objects.hash(age, money, stats);
+        return Objects.hash(stats);
     }
 }
