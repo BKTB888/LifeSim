@@ -6,23 +6,30 @@ import org.main.GameCharacter;
 
 public class Human extends Controller{
     HumanFrame humanFrame;
-    volatile Boolean endTurn = false;
+    private final Object endTurnLock = new Object();
 
     public Human(GameCharacter character){
         super(character);
 
         humanFrame = new HumanFrame(character);
-        humanFrame.addAgeListener(_ -> endTurn = true);
+        humanFrame.addAgeListener(_ -> {
+            synchronized (endTurnLock) {
+                endTurnLock.notify(); // Notify within the synchronized block
+            }
+        });
     }
 
     @Override
     public void start() {
         humanFrame.setVisible(true);
         humanFrame.refresh();
-        while (!endTurn) {
-            Thread.onSpinWait();
+        synchronized (endTurnLock){
+            try {
+                endTurnLock.wait();
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
         }
-        endTurn = false;
     }
 
     @Override
