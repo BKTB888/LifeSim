@@ -1,8 +1,8 @@
 package org.controller;
 
 
-import org.main.GameCharacter;
-import org.main.GameEvent;
+import org.model.GameCharacter;
+import org.model.GameEvent;
 
 public abstract class Controller {
     GameCharacter myCharacter;

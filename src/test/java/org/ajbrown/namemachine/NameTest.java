@@ -15,8 +15,8 @@
  */
 package org.ajbrown.namemachine;
 
-import org.helper.ajbrown.namemachine.Gender;
-import org.helper.ajbrown.namemachine.Name;
+import org.model.helper.ajbrown.namemachine.Gender;
+import org.model.helper.ajbrown.namemachine.Name;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

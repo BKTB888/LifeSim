@@ -17,10 +17,10 @@ package org.ajbrown.namemachine;
 
 import java.util.List;
 
-import org.helper.ajbrown.namemachine.Gender;
-import org.helper.ajbrown.namemachine.Name;
-import org.helper.ajbrown.namemachine.NameGenerator;
-import org.helper.ajbrown.namemachine.NameGeneratorOptions;
+import org.model.helper.ajbrown.namemachine.Gender;
+import org.model.helper.ajbrown.namemachine.Name;
+import org.model.helper.ajbrown.namemachine.NameGenerator;
+import org.model.helper.ajbrown.namemachine.NameGeneratorOptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -112,12 +112,12 @@ public class NameGeneratorTest {
 
         // All of the female names should be female
         for( Name name : femaleNames ) {
-            assertEquals( name.gender, Gender.FEMALE );
+            assertEquals(Gender.FEMALE, name.gender);
         }
 
         // All of the male names should be male
         for( Name name : maleNames ) {
-            assertEquals( name.gender, Gender.MALE );
+            assertEquals(Gender.MALE, name.gender);
         }
     }
 

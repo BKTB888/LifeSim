@@ -1,10 +1,10 @@
 package org.controller;
 
-import org.helper.StaticRandom;
+import org.model.helper.StaticRandom;
 import org.jetbrains.annotations.NotNull;
-import org.main.GameAction;
-import org.main.GameCharacter;
-import org.main.GameEvent;
+import org.model.actions.GameAction;
+import org.model.GameCharacter;
+import org.model.GameEvent;
 
 import java.util.Comparator;
 import java.util.stream.Stream;

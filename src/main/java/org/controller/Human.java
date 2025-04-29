@@ -1,9 +1,10 @@
 package org.controller;
 
-import org.gui.HumanFrame;
-import org.main.GameEvent;
-import org.main.GameCharacter;
+import org.view.HumanFrame;
+import org.model.GameEvent;
+import org.model.GameCharacter;
 
+/// Needs refactor to be MVC
 public class Human extends Controller{
     HumanFrame humanFrame;
     private final Object endTurnLock = new Object();
