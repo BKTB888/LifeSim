@@ -2,7 +2,8 @@ package org.view;
 
 import org.jetbrains.annotations.NotNull;
 import org.model.GameCharacter;
-import org.model.GameEvent;
+import org.model.actions.RunnableAction;
+import org.model.events.GivenEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class HumanFrame extends JFrame{
 
         JButton availableActions = new JButton("Actions");
         JButton othersButton = new JButton("Other Characters");
-        GameActionsPanel actionsPanel = new GameActionsPanel(character.getActions(), character);
+        GameActionsPanel actionsPanel = new GameActionsPanel(character.getActions().toArray(RunnableAction[]::new), character);
         actionsPanel.setVisible(false);
         this.add(actionsPanel);
         actionsPanel.add(othersButton);
@@ -100,7 +101,7 @@ public class HumanFrame extends JFrame{
         characterPanel.refresh();
     }
 
-    public void launchEvent(GameEvent event){
+    public void launchEvent(GivenEvent event){
         new GameEventDialog(event, character).addWindowListener( new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {

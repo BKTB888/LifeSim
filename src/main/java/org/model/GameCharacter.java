@@ -1,42 +1,44 @@
 package org.model;
 
 import org.controller.Human;
-import org.model.actions.GameAction;
+import org.model.actions.RunnableAction;
+import org.model.events.GameEvent;
+import org.model.events.GivenEvent;
 import org.model.helper.Globals;
+import org.model.helper.NameGen;
 import org.model.stats.StatType;
-import org.model.helper.StaticRandom;
 import org.model.helper.ajbrown.namemachine.Gender;
 import org.model.helper.ajbrown.namemachine.Name;
-import org.model.helper.ajbrown.namemachine.NameGenerator;
-import org.model.helper.ajbrown.namemachine.NameGeneratorOptions;
 import org.controller.AI;
 import org.controller.Controller;
 import org.jetbrains.annotations.NotNull;
 import org.model.stats.Stats;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GameCharacter {
-    private static final NameGeneratorOptions nameOptions = new NameGeneratorOptions();
-    private static final NameGenerator nameGen;
-    static {
-        nameOptions.setRandomSeed(StaticRandom.nextLong());
-        nameOptions.setGenderWeight(50);
-        nameGen  = new NameGenerator(nameOptions);
-    }
-
     Name name;
-    Gender gender;
 
     Stats stats;
-    List<GameAction> availableActions = Arrays.asList(Globals.baseActions);
+    Set<RunnableAction> runnableActions = Arrays.stream(Globals.baseActions)
+            .map(action ->new RunnableAction(action, this))
+            .collect(Collectors.toCollection(HashSet::new));
     Controller myController;
     Game myGame;
 
-    public List<GameAction> getActions(){return availableActions;}
+    public Collection<RunnableAction> getActions(){return Collections.unmodifiableCollection(runnableActions);}
     public GameCharacter(Game myGame){
-        this.name = nameGen.generateName();
-        this.gender = name.gender;
+        this.name = NameGen.generateName();
+        this.stats = new Stats();
+
+        this.myGame = myGame;
+
+        this.myController = new AI(this);
+    }
+
+    public GameCharacter(Game myGame, Gender gender){
+        this.name = NameGen.generateName(gender);
         this.stats = new Stats();
 
         this.myGame = myGame;
@@ -46,7 +48,6 @@ public class GameCharacter {
 
     public GameCharacter(String firstName, String lastName, Gender gender, Game myGame){
         this.name = new Name(firstName, lastName, gender);
-        this.gender = gender;
         this.myGame = myGame;
         this.stats = new Stats();
         this.myController = new AI(this);
@@ -56,8 +57,8 @@ public class GameCharacter {
         this.myGame = game;
     }
 
-    public void giveEvent(GameEvent event){
-        myController.decide(event);
+    public void receiveEvent(GameEvent event){
+        myController.decide(new GivenEvent(event, this));
     }
 
     public void setStat(StatType statType, int num){
@@ -83,7 +84,7 @@ public class GameCharacter {
     @Override
     public String toString(){
         return  String.valueOf(name) + '\n' +
-                gender + '\n'
+                name.gender + '\n'
                 + stats;
     }
 
@@ -132,9 +133,5 @@ public class GameCharacter {
         GameCharacter character = (GameCharacter) o; // Cast to the specific class
 
         return Objects.equals(stats, character.stats);
-    }
-
-    public Game getGame(){
-        return myGame;
     }
 }

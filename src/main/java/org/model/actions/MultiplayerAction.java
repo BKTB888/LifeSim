@@ -2,22 +2,18 @@ package org.model.actions;
 
 import org.model.GameCharacter;
 
-import java.util.List;
 import java.util.function.BiConsumer;
 
 public class MultiplayerAction {
     String name;
-    BiConsumer<GameCharacter,List<GameCharacter>> effectFunc;
+    BiConsumer<GameCharacter,GameCharacter[]> action;
 
-    public MultiplayerAction(String name, GameAction forMe, GameAction forOthers) {
+    public MultiplayerAction(String name, BiConsumer<GameCharacter, GameCharacter[]> action) {
         this.name = name;
-        this.effectFunc = (me, otherChar) -> {
-            forMe.executeOn(me);
-            otherChar.forEach(forOthers::executeOn);
-        };
+        this.action = action;
     }
 
-    public void executeOn(GameCharacter me, List<GameCharacter> others) {
-        effectFunc.accept(me, others);
+    public void executeOn(GameCharacter me, GameCharacter[] others) {
+        action.accept(me, others);
     }
 }

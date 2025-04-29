@@ -2,6 +2,7 @@ package org.model;
 
 import org.controller.Controller;
 import org.controller.Human;
+import org.model.events.GlobalEvent;
 import org.model.helper.Globals;
 import org.model.helper.StaticRandom;
 
@@ -51,7 +52,7 @@ public class Game{
         for (GameCharacter character : List.copyOf(characters)) {
             for (GlobalEvent event : events)
                 if (StaticRandom.nextDouble() < event.chanceFor(character))
-                    character.giveEvent(event);
+                    character.receiveEvent(event);
         }
         characters.forEach(GameCharacter::start);
     }

@@ -2,12 +2,13 @@ package org.view;
 
 import org.jetbrains.annotations.NotNull;
 import org.model.GameCharacter;
-import org.model.GameEvent;
+import org.model.events.GivenEvent;
+
 import javax.swing.*;
 
 public class GameEventDialog extends JDialog {
 
-    public GameEventDialog(@NotNull GameEvent event, GameCharacter character){
+    public GameEventDialog(@NotNull GivenEvent event, GameCharacter character){
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         this.setTitle(event.name);
 

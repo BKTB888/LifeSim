@@ -1,7 +1,7 @@
 package org.controller;
 
+import org.model.events.GivenEvent;
 import org.view.HumanFrame;
-import org.model.GameEvent;
 import org.model.GameCharacter;
 
 /// Needs refactor to be MVC
@@ -34,7 +34,7 @@ public class Human extends Controller{
     }
 
     @Override
-    public void decide(GameEvent event) {
+    public void decide(GivenEvent event) {
         humanFrame.setVisible(true);
         humanFrame.launchEvent(event);
     }
