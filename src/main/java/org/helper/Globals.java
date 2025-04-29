@@ -1,9 +1,6 @@
 package org.helper;
 
-import org.main.GameAction;
-import org.main.GameCharacter;
-import org.main.GameEvent;
-import org.main.GlobalEvent;
+import org.main.*;
 import org.stats.StatType;
 
 import java.util.List;
@@ -22,24 +19,49 @@ public class Globals {
             )),
             GameAction.createModifier("Read a book", StatType.Smartness, 5),
             new GameAction("Talk to someone", character ->
-                character.giveEvent(new GameEvent("Pick Someone!", character.getOtherCharacters(10)
-                        .stream()
-                        .map(otherCharacter -> new GameAction(otherCharacter.getName().toString(),
-                                _ -> otherCharacter.giveEvent(
-                            new GameEvent(character.getName().toString() + " want's to talk to you!",
-                                    List.of(
-                                            new GameAction("Oh awesome!", _ -> {
-                                                character.giveEvent(new GameEvent(otherCharacter.getName() + " was happy to talk to you",
-                                                        GameAction.createModifier("I'm glad", StatType.Happiness, 50)));
-                                                otherCharacter.modifyStat(StatType.Happiness, 60);
-                                    }),
-                                            new GameAction("I hate that guy", _ -> {
-                                                character.giveEvent(new GameEvent(otherCharacter.getName() + " said you are an idiot",
-                                                        GameAction.createModifier("Oh...", StatType.Happiness, -35)));
-                                                character.modifyStat(StatType.Luck, -20);
-                                            }))
-                            )))
-                        ).toList()))
+                    character.giveEvent(new GameEvent("Pick Someone!", character.getOtherCharacters(10)
+                            .stream()
+                            .map(otherCharacter -> new GameAction(otherCharacter.getName().toString(),
+                                    _ -> otherCharacter.giveEvent(
+                                            new GameEvent(character.getName().toString() + " want's to talk to you!",
+                                                    List.of(
+                                                            new GameAction("Oh awesome!", _ -> {
+                                                                character.giveEvent(new GameEvent(otherCharacter.getName() + " was happy to talk to you",
+                                                                        GameAction.createModifier("I'm glad", StatType.Happiness, 50)));
+                                                                otherCharacter.modifyStat(StatType.Happiness, 60);
+                                                            }),
+                                                            new GameAction("I hate that guy", _ -> {
+                                                                character.giveEvent(new GameEvent(otherCharacter.getName() + " said you are an idiot",
+                                                                        GameAction.createModifier("Oh...", StatType.Happiness, -35)));
+                                                                character.modifyStat(StatType.Luck, -20);
+                                                            })
+                                                    )
+                                            ))
+                                    )
+                            ).toList()
+                    )
+                )
+            ),
+            new GameAction("Check someone out", character ->
+                    character.giveEvent(new GameEvent("Pick Someone!", character.getOtherCharacters(10)
+                            .stream()
+                            .map(otherCharacter -> new GameAction(otherCharacter.getName().toString(),
+                                    _ -> otherCharacter.giveEvent(
+                                            new GameEvent(character.getName().toString() + " want's to talk to you!",
+                                                    List.of(
+                                                            new GameAction("Oh awesome!", _ -> {
+                                                                character.giveEvent(new GameEvent(otherCharacter.getName() + " was happy to talk to you",
+                                                                        GameAction.createModifier("I'm glad", StatType.Happiness, 50)));
+                                                                otherCharacter.modifyStat(StatType.Happiness, 60);
+                                                            }),
+                                                            new GameAction("I hate that guy", _ -> {
+                                                                character.giveEvent(new GameEvent(otherCharacter.getName() + " said you are an idiot",
+                                                                        GameAction.createModifier("Oh...", StatType.Happiness, -35)));
+                                                                character.modifyStat(StatType.Luck, -20);
+                                                            }))
+                                            )))
+                            ).toList())
+                    )
             )
     };
 

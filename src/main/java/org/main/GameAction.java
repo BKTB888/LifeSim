@@ -32,6 +32,13 @@ public class GameAction {
         return new GameAction(name, character -> character.modifyStats(statsMap));
     }
 
+    /// Needs review
+    @NotNull
+    @Contract(value = "_, _ -> new", pure = true)
+    public static GameAction createEventGiver(String name, @NotNull GameEvent event){
+        return new GameAction(name, character -> character.giveEvent(event));
+    }
+
     @Override
     public String toString(){
         return name;

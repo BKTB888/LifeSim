@@ -3,8 +3,6 @@ package org.main;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
@@ -21,15 +19,5 @@ class GameTest {
 
         Game game1= new Game(500);
         assertFalse(game1.humansRemaining());
-    }
-
-    @Test
-    public void serializable() throws IOException, ClassNotFoundException {
-        Game originalGame = new Game(game);
-
-        game.save("test");
-        game.load("test");
-
-        assertEquals(originalGame, game);
     }
 }

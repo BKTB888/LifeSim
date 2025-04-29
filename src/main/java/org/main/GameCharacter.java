@@ -13,10 +13,9 @@ import org.controller.Controller;
 import org.jetbrains.annotations.NotNull;
 import org.stats.Stats;
 
-import java.io.*;
 import java.util.*;
 
-public class GameCharacter implements Serializable{
+public class GameCharacter {
     private static final NameGeneratorOptions nameOptions = new NameGeneratorOptions();
     private static final NameGenerator nameGen;
     static {
@@ -29,9 +28,9 @@ public class GameCharacter implements Serializable{
     Gender gender;
 
     Stats stats;
-    transient List<GameAction> availableActions = Arrays.asList(Globals.baseActions);
-    transient Controller myController;
-    transient Game myGame;
+    List<GameAction> availableActions = Arrays.asList(Globals.baseActions);
+    Controller myController;
+    Game myGame;
 
     public List<GameAction> getActions(){return availableActions;}
     public GameCharacter(Game myGame){
@@ -124,24 +123,6 @@ public class GameCharacter implements Serializable{
         statMap.forEach(stats::modify);
     }
 
-    @Serial
-    private void writeObject(@NotNull ObjectOutputStream out) throws IOException{
-        out.defaultWriteObject();
-        out.write(myController instanceof Human ? 1 : 0);
-    }
-
-    @Serial
-    private void readObject(@NotNull ObjectInputStream in) throws IOException, ClassNotFoundException{
-        availableActions = List.of(Globals.baseActions);
-
-        in.defaultReadObject();
-        if (in.read() == 1)
-            myController = new Human(this);
-        else {
-            myController = new AI(this);
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true; // Check if comparing the same reference
@@ -154,10 +135,5 @@ public class GameCharacter implements Serializable{
 
     public Game getGame(){
         return myGame;
-    }
-
-    @Override
-    public int hashCode(){
-        return Objects.hash(stats);
     }
 }

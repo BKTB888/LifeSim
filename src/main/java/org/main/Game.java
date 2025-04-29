@@ -6,13 +6,12 @@ import org.helper.Globals;
 import org.helper.StaticRandom;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
 import java.util.*;
 
 public class Game{
 
     List<GameCharacter> characters;
-    transient List<GlobalEvent> events = Arrays.asList(Globals.baseEvents);
+    List<GlobalEvent> events = Arrays.asList(Globals.baseEvents);
     private volatile boolean quit = false;
 
     public Game(int numOfCharacters){
@@ -34,11 +33,7 @@ public class Game{
         characters.forEach(character -> character.setGame(this));
     }
 
-    public Game(@NotNull Game game) {
-        this.characters = game.characters;
-        characters.forEach(character -> character.setGame(this));
-    }
-
+    // these had some problems, with the fact that it's not sure if they can give back proper a character
     public GameCharacter getRandomCharacter(){
         return characters.get(StaticRandom.nextInt(characters.size()));
     }
@@ -77,35 +72,16 @@ public class Game{
                 .anyMatch(class1 -> class1.equals(Human.class));
     }
 
-    public void save(String name) throws IOException {
-        FileOutputStream fileOut = new FileOutputStream("saves/" + name + ".txt");
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(characters);
-    }
-
-    public void load(String name) throws IOException, ClassNotFoundException {
-        FileInputStream fileIn = new FileInputStream("saves/" + name + ".txt");
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-
-        this.characters = (List<GameCharacter>) in.readObject();
-        characters.forEach(character -> character.setGame(this));
-        quit = false;
-    }
-
     public void quit(){
         quit = true;
     }
 
+    // Not sure about it
     @Override
     public boolean equals(Object o){
         if (this == o) return true; // Check if comparing the same reference
         if (o == null || getClass() != o.getClass()) return false; // Ensure class match
 
         return characters.equals(((Game) o).characters);
-    }
-
-    @Override
-    public int hashCode(){
-        return Objects.hash(characters);
     }
 }
