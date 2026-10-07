@@ -1,11 +1,21 @@
 # LifeSim
-This is a simple life simulator game, where each character has a specific set of actions that can happen to them, which they choose from.
-The game also has events, which can happen with a given probability. 
+A simple life simulator game. Each character has its own set of actions that can happen to them, and they choose from these.
+The game also has events, which happen with a given probability.
+
+## Running
+Needs Java 22+ and Maven.
+
+```sh
+mvn compile exec:java -Dexec.mainClass=org.model.Main   # 500 characters, one of them yours
+```
 
 ## OOP
-I aim to be as object oriented as this simple project demands, and I aimed it to be very extensible, and it is. 
-Actions, StatTypes, Characters, Player types and almost everything else can be easily extended.
-I designed the game so that it is truly a simulation and every charachter is equal, no matter player or robot.
+I aimed to be as object-oriented as this simple project demands, and to make it very extensible.
+Actions, stat types, characters, player types and almost everything else can be easily extended.
+The game is truly a simulation: every character is equal, whether a player or a robot plays it.
 
 ## UI
-The UI uses MVC architecture with java swing, and is completly independent of the model.
+The UI follows MVC with Java Swing, and is completely independent of the model.
+
+## Credits
+Character names come from [name-machine](https://github.com/ajbrown/name-machine) by ajbrown (Apache 2.0), included under `org.model.helper.ajbrown.namemachine`.
