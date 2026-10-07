@@ -7,6 +7,7 @@ Needs Java 22+ and Maven.
 
 ```sh
 mvn compile exec:java -Dexec.mainClass=org.model.Main   # 500 characters, one of them yours
+mvn test
 ```
 
 ## OOP

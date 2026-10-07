@@ -14,18 +14,20 @@ import org.controller.Controller;
 import org.jetbrains.annotations.NotNull;
 import org.model.stats.Stats;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class GameCharacter {
+public class GameCharacter implements Serializable {
     Name name;
 
     Stats stats;
-    Set<RunnableAction> runnableActions = Arrays.stream(Globals.baseActions)
+    // Only name and stats are saved; these tie the character to a running game and are null after deserialization.
+    transient Set<RunnableAction> runnableActions = Arrays.stream(Globals.baseActions)
             .map(action ->new RunnableAction(action, this))
             .collect(Collectors.toCollection(HashSet::new));
-    Controller myController;
-    Game myGame;
+    transient Controller myController;
+    transient Game myGame;
 
     public Collection<RunnableAction> getActions(){return Collections.unmodifiableCollection(runnableActions);}
     public GameCharacter(Game myGame){
